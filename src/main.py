@@ -54,6 +54,10 @@ async def handle_call_tool(
     return _text(f"Unknown service {name=}")
 
 async def main():
+    # await handle_call_tool(name="get-nepheli-inhouse", arguments={
+    #     'hotel-name': 'castellum',
+    #     'selected-date': '2022-05-16',
+    # })
     # Run the server using stdin/stdout streams
     async with stdio_server() as (read_stream, write_stream):
         await server.run(
