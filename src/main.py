@@ -1,4 +1,4 @@
-from typing import List, Optional, Sequence
+from typing import List, Optional, Sequence, Union
 from mcp.server.models import InitializationOptions
 from mcp.server import NotificationOptions, Server
 from mcp.types import TextContent, Tool, ImageContent, EmbeddedResource
@@ -12,6 +12,7 @@ from constants import SERVER_NAME, SERVER_VERSION
 import tools as tools_module
 
 server = Server(SERVER_NAME)
+
 @server.list_tools()
 async def handle_list_tools() -> list[Tool]:
     """
@@ -31,33 +32,25 @@ async def handle_list_tools() -> list[Tool]:
 @server.call_tool()
 async def handle_call_tool(
     name: str, arguments: dict | None
-) -> Sequence[TextContent | ImageContent | EmbeddedResource]:
-    """
-    Handle tool execution requests.
-    Tools can fetch hotel inhouse reservation data.
-    """
+) -> Union[List[TextContent], List[ImageContent], List[EmbeddedResource]]:
     if not arguments:
-        raise ValueError("Missing arguments")
+        return _text("Missing arguments")
 
     if name == "get-nepheli-inhouse":
-        hotel_name: Optional[str] = arguments.get("hotel-name")
-        selected_date: Optional[str] = arguments.get("selected-date")
+        hotel_name = arguments.get("hotel-name")
+        selected_date = arguments.get("selected-date")
 
         if not hotel_name:
-            raise ValueError("Missing hotel name")
+            return _text("Missing hotel name")
         if not selected_date:
-            raise ValueError("Missing selected date")
+            return _text("Missing selected date")
         
-        payload: List[TextContent] = await get_inhouse(hotel_name, selected_date)
-        return payload
+        return await get_inhouse(hotel_name, selected_date)
 
-    return _text(f"Unknown service {name=}")
+    return _text(f"Unknown service {name}")
+
 
 async def main():
-    # await handle_call_tool(name="get-nepheli-inhouse", arguments={
-    #     'hotel-name': 'castellum',
-    #     'selected-date': '2022-05-16',
-    # })
     # Run the server using stdin/stdout streams
     async with stdio_server() as (read_stream, write_stream):
         await server.run(

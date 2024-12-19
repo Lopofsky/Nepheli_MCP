@@ -9,8 +9,9 @@ inhouse_schema = {
                 "description": "Hotel Name",
             },
             "selected-date": {
-                "type": "date",
+                "type": "string",  # Changed from "date" to "string"
                 "description": "Date to get inhouse guests [2035 > Year > 2019]. Format YYYY-MM-DD",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"  # Added pattern to validate date format
             }
         },
         "required": ["hotel-name", "selected-date"],

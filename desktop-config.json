@@ -5,14 +5,15 @@
             "args": [
                 "-y",
                 "@modelcontextprotocol/server-filesystem",
-                "/Users/lopofsky/claude_playground/"
+                "/Users/lopofsky/claude_playground/",
+                "/Users/lopofsky/git/Nepheli_MCP/"
             ]
         },
         "Nepheli-PMS": {
             "command": "sh",
             "args": [
                 "-c",
-                "VIRTUAL_ENV='/Users/lopofsky/claude_playground/rms_mcp' && cd $VIRTUAL_ENV && source .venv/bin/activate && /Users/lopofsky/.local/bin/uv --directory $PWD pip install . && /Users/lopofsky/.local/bin/uv run src/main.py"
+                "VIRTUAL_ENV='/Users/lopofsky/git/Nepheli_MCP' && cd $VIRTUAL_ENV && source .venv/bin/activate && /Users/lopofsky/.local/bin/uv --directory $PWD pip install . && /Users/lopofsky/.local/bin/uv run src/main.py"
             ]
         }
     }
