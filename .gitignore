@@ -44,7 +44,5 @@ Thumbs.db
 
 # Project specific
 uv.lock
-desktop-config.json
-edit_claude_desktop_config.sh
 [BUGGY]*
 llm-dev/
